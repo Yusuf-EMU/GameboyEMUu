@@ -282,6 +282,70 @@ namespace Gameboyemu
             {
                 A -= A + c;
             }
+            if (parsedHex[0] == "40")
+            {
+                B = B;
+            }
+            if (parsedHex[0] == "41")
+            {
+                B = C;
+            }
+            if (parsedHex[0] == "42")
+            {
+                B = D;
+            }
+            if (parsedHex[0] == "43")
+            {
+                B = E;
+            }
+            if (parsedHex[0] == "44")
+            {
+                B = H;
+            }
+            if (parsedHex[0] == "45")
+            {
+                B = L;
+            }
+            if (parsedHex[0] == "46")
+            {
+                B = HL;
+            }
+            if (parsedHex[0] == "47")
+            {
+                B = A;
+            }
+            if (parsedHex[0] == "48")
+            {
+                C = B;
+            }
+            if (parsedHex[0] == "49")
+            {
+                C = C;
+            }
+            if (parsedHex[0] == "4A")
+            {
+                C = D;
+            }
+            if (parsedHex[0] == "4B")
+            {
+                C = E;
+            }
+            if (parsedHex[0] == "4C")
+            {
+                C = H;
+            }
+            if (parsedHex[0] == "4D")
+            {
+                C = D;
+            }
+            if (parsedHex[0] == "4E")
+            {
+                C = HL;
+            }
+            if (parsedHex[0] == "4F")
+            {
+                C = A;
+            }
         }
         public void ASMtoCs(string ASM) {
             string[] parsedASM = ASM.Split(' ');
