@@ -442,6 +442,119 @@ namespace Gameboyemu
             {
                 H = A;
             }
+            if (parsedHex[0] == "68")
+            {
+                L = B;
+            }
+            if (parsedHex[0] == "69")
+            {
+                L = C;
+            }
+            if (parsedHex[0] == "6A")
+            {
+                L = D;
+            }
+            if (parsedHex[0] == "6B")
+            {
+                L = E;
+            }
+            if (parsedHex[0] == "6C")
+            {
+                L = H;
+            }
+            if (parsedHex[0] == "6D")
+            {
+                L = L;
+            }
+            if (parsedHex[0] == "6E")
+            {
+                L = HL;
+            }
+            if (parsedHex[0] == "6F")
+            {
+                L = A;
+            }
+            if (parsedHex[0] == "70")
+            {
+                HL = B;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "71")
+            {
+                HL = C;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "72")
+            {
+                HL = D;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "73")
+            {
+                HL = E;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "74")
+            {
+                HL = H;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "75")
+            {
+                HL = L;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+		//remember to add opcode 76 for the HALT instruction.
+            if (parsedHex[0] == "77")
+            {
+                HL = A;
+		        byte[] bytes = BitConverter.GetBytes(HL);
+		        bytes[1] = H;
+		        bytes[1] = L;
+            }
+            if (parsedHex[0] == "78")
+            {
+                A = B;
+            }
+            if (parsedHex[0] == "79")
+            {
+                A = C;
+            }
+            if (parsedHex[0] == "7A")
+            {
+                A = D;
+            }
+            if (parsedHex[0] == "7B")
+            {
+                A = E;
+            }
+            if (parsedHex[0] == "7C")
+            {
+                A = H;
+            }
+            if (parsedHex[0] == "7D")
+            {
+                A = L;
+            }
+            if (parsedHex[0] == "7E")
+            {
+                A = HL;
+            }
+            if (parsedHex[0] == "7F")
+            {
+                A = A;
         }
         public void ASMtoCs(string ASM) {
             string[] parsedASM = ASM.Split(' ');
