@@ -410,6 +410,38 @@ namespace Gameboyemu
             {
                 E = A;
             }
+            if (parsedHex[0] == "60")
+            {
+                H = B;
+            }
+            if (parsedHex[0] == "61")
+            {
+                H = C;
+            }
+            if (parsedHex[0] == "62")
+            {
+                H = D;
+            }
+            if (parsedHex[0] == "63")
+            {
+                H = E;
+            }
+            if (parsedHex[0] == "64")
+            {
+                H = H;
+            }
+            if (parsedHex[0] == "65")
+            {
+                H = L;
+            }
+            if (parsedHex[0] == "66")
+            {
+                H = HL;
+            }
+            if (parsedHex[0] == "67")
+            {
+                H = A;
+            }
         }
         public void ASMtoCs(string ASM) {
             string[] parsedASM = ASM.Split(' ');
