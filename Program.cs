@@ -17,16 +17,16 @@ namespace Gameboyemu
         public int cpuWrite;
         public int cpuRead;
         //cpu registers
-        public int A;
-        public int B;
-        public int C;
-        public int PC;
-        public int D;
-        public int SP;
-        public int E;
-        public int F;
-        public int L;
-        public int H;
+        public short A;
+        public short B;
+        public short C;
+        public short PC;
+        public short D;
+        public short SP;
+        public short E;
+        public short F;
+        public short L;
+        public short H;
         short HL;
         //Flags/'
         public int c;
@@ -555,6 +555,11 @@ namespace Gameboyemu
             if (parsedHex[0] == "7F")
             {
                 A = A;
+	    }
+	    if (parsedHex[0] == "A0")
+            {
+                A =  B&A;
+	    }
         }
         public void ASMtoCs(string ASM) {
             string[] parsedASM = ASM.Split(' ');
