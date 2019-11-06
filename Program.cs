@@ -98,7 +98,8 @@ namespace Gameboyemu
         }
         public void HextoCs(string Hex) {
             string[] parsedHex = Hex.Split(' ');
-            if (parsedHex[0] == "3C") {
+            if (parsedHex[0] == "3C")
+            {
                 A++;
             }
             if (parsedHex[0] == "2C")
@@ -125,13 +126,15 @@ namespace Gameboyemu
             {
                 C--;
             }
-            if (parsedHex[0] == "3D") {
+            if (parsedHex[0] == "3D")
+            {
                 A--;
             }
             if (parsedHex[0] == "2B")
             {
                 H--;
-                if (H < 0) {
+                if (H < 0)
+                {
                     L--;
                     H = 0;
                 }
@@ -212,7 +215,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "8E")
             {
-                A += HL + c;
+                A += cpuBus[HL] + c;
             }
             if (parsedHex[0] == "8F")
             {
@@ -244,7 +247,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "96")
             {
-                A -= HL;
+                A -= cpuBus[HL];
             }
             if (parsedHex[0] == "97")
             {
@@ -254,7 +257,7 @@ namespace Gameboyemu
             {
                 A -= B + c;
             }
-            if(parsedHex[0] == "99")
+            if (parsedHex[0] == "99")
             {
                 A -= C + c;
             }
@@ -308,7 +311,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "46")
             {
-                B = HL;
+                B = cpuBus[HL];
             }
             if (parsedHex[0] == "47")
             {
@@ -340,7 +343,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "4E")
             {
-                C = HL;
+                C = cpuBus[HL];
             }
             if (parsedHex[0] == "4F")
             {
@@ -372,7 +375,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "56")
             {
-                D = HL;
+                D = cpuBus[HL];
             }
             if (parsedHex[0] == "57")
             {
@@ -404,7 +407,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "5E")
             {
-                E = HL;
+                E = cpuBus[HL];
             }
             if (parsedHex[0] == "5F")
             {
@@ -436,7 +439,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "66")
             {
-                H = HL;
+                H = cpuBus[HL];
             }
             if (parsedHex[0] == "67")
             {
@@ -468,7 +471,7 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "6E")
             {
-                L = HL;
+                L = cpuBus[HL];
             }
             if (parsedHex[0] == "6F")
             {
@@ -498,6 +501,11 @@ namespace Gameboyemu
             {
                 cpuBus[HL] = L;
             }
+            //remember to add opcode 76 for the HALT instruction.
+            if (parsedHex[0] == "77")
+            {
+                cpuBus[HL] = A;
+            }
             if (parsedHex[0] == "78")
             {
                 A = B;
@@ -524,16 +532,16 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "7E")
             {
-                A = HL;
+                A = cpuBus[HL];
             }
             if (parsedHex[0] == "7F")
             {
                 A = A;
-	    }
-	    if (parsedHex[0] == "A0")
+            }
+            if (parsedHex[0] == "A0")
             {
-                A =  B&A;
-	    }
+                A = B & A;
+            }
         }
         public void ASMtoCs(string ASM) {
             string[] parsedASM = ASM.Split(' ');
