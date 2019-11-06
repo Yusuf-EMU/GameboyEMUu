@@ -17,23 +17,23 @@ namespace Gameboyemu
         public int cpuWrite;
         public int cpuRead;
         //cpu registers
-        public short A;
-        public short B;
-        public short C;
-        public short PC;
-        public short D;
-        public short SP;
-        public short E;
-        public short F;
-        public short L;
-        public short H;
+        public byte A;
+        public byte B;
+        public byte C;
+        public byte PC;
+        public byte D;
+        public byte SP;
+        public byte E;
+        public byte F;
+        public byte L;
+        public byte H;
         short HL;
         //Flags/'
         public int c;
         //not a register
         static int b;
         ConsoleKeyInfo input;
-        public int[] cpuBus = new int[65535];
+        public byte[] cpuBus = new byte[65535];
 
         public void controller()
         {
@@ -476,53 +476,27 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "70")
             {
-                HL = B;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = B;
             }
             if (parsedHex[0] == "71")
             {
-                HL = C;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = C;
             }
             if (parsedHex[0] == "72")
             {
-                HL = D;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = D;
             }
             if (parsedHex[0] == "73")
             {
-                HL = E;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = E;
             }
             if (parsedHex[0] == "74")
             {
-                HL = H;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = H;
             }
             if (parsedHex[0] == "75")
             {
-                HL = L;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
-            }
-		//remember to add opcode 76 for the HALT instruction.
-            if (parsedHex[0] == "77")
-            {
-                HL = A;
-		        byte[] bytes = BitConverter.GetBytes(HL);
-		        bytes[1] = H;
-		        bytes[1] = L;
+                cpuBus[HL] = L;
             }
             if (parsedHex[0] == "78")
             {
