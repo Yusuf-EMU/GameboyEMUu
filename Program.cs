@@ -29,7 +29,7 @@ namespace Gameboyemu
         public byte H;
         short HL;
         //Flags/'
-        public int c;
+        public byte c;
         //not a register
         static int b;
         ConsoleKeyInfo input;
@@ -191,35 +191,43 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "88")
             {
-                A += B + c;
+                A += B;
+                A += c;
             }
             if (parsedHex[0] == "89")
             {
-                A += C + c;
+                A += C;
+                A += c;
             }
             if (parsedHex[0] == "8A")
             {
-                A += D + c;
+                A += D;
+                A += c;
             }
             if (parsedHex[0] == "8B")
             {
-                A += E + c;
+                A += E;
+                A += c;
             }
             if (parsedHex[0] == "8C")
             {
-                A += H + c;
+                A += H;
+                A += c;
             }
             if (parsedHex[0] == "8D")
             {
-                A += L + c;
+                A += L;
+                A += c;
             }
             if (parsedHex[0] == "8E")
             {
-                A += cpuBus[HL] + c;
+                A += cpuBus[HL];
+                A += c;
             }
             if (parsedHex[0] == "8F")
             {
-                A += A + c;
+                A += A;
+                A += c;
             }
             if (parsedHex[0] == "90")
             {
