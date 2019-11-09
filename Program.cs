@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Threading;
+//using System.Drawing;
 
 namespace Gameboyemu
 {
@@ -17,28 +18,29 @@ namespace Gameboyemu
         public int cpuWrite;
         public int cpuRead;
         //cpu registers
-        public byte A;
-        public byte B;
-        public byte C;
-        public byte PC;
-        public byte D;
-        public byte SP;
-        public byte E;
-        public byte F;
-        public byte L;
-        public byte H;
+        public int A;
+        public int B;
+        public int C;
+        public int PC;
+        public int D;
+        public int SP;
+        public int E;
+        public int F;
+        public int L;
+        public int H;
         short HL;
         //Flags/'
-        public byte c;
+        public int c;
         //not a register
         static int b;
         ConsoleKeyInfo input;
-        public byte[] cpuBus = new byte[65535];
+        public int[] cpuBus = new int[65535];
 
         public void controller()
         {
             cpuBus[65280] = 48;
-            if (Console.KeyAvailable == true) {
+            if (Console.KeyAvailable == true)
+            {
                 input = Console.ReadKey();
             }
             System.Threading.Thread.Sleep((int)0.0);
@@ -69,7 +71,8 @@ namespace Gameboyemu
             if (input.Key == ConsoleKey.J | input.Key == ConsoleKey.K | input.Key == ConsoleKey.B | input.Key == ConsoleKey.V)
             {
                 cpuBus[65280] -= 16;
-                while (input.Key == ConsoleKey.J) {
+                while (input.Key == ConsoleKey.J)
+                {
                     cpuBus[65280] += 2;
                 }
 
@@ -90,13 +93,15 @@ namespace Gameboyemu
             //Wrap();
             var Iinput = Console.ReadLine();
             HextoCs(Iinput);
+            Wrap();
             Console.WriteLine("Registers A:" + A + " and B:" + B);
             Console.WriteLine(cpuBus[1]);
             HL = (short)((H << 8) | L);
             //Console.WriteLine("CpuRead: " + cpuRead);
             //Console.WriteLine(cpuBus[65280]);
         }
-        public void HextoCs(string Hex) {
+        public void HextoCs(string Hex)
+        {
             string[] parsedHex = Hex.Split(' ');
             if (parsedHex[0] == "3C")
             {
@@ -263,35 +268,43 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "98")
             {
-                A -= B + c;
+                A -= B;
+                A -= c;
             }
             if (parsedHex[0] == "99")
             {
-                A -= C + c;
+                A -= C;
+                A -= c;
             }
             if (parsedHex[0] == "9A")
             {
-                A -= D + c;
+                A -= D;
+                A -= c;
             }
             if (parsedHex[0] == "9B")
             {
-                A -= E + c;
+                A -= E;
+                A -= c;
             }
             if (parsedHex[0] == "9C")
             {
-                A -= H + c;
+                A -= H;
+                A -= c;
             }
             if (parsedHex[0] == "9D")
             {
-                A -= L + c;
+                A -= L;
+                A -= c;
             }
             if (parsedHex[0] == "9E")
             {
-                A -= HL + c;
+                A -= cpuBus[HL];
+                A -= c;
             }
             if (parsedHex[0] == "9F")
             {
-                A -= A + c;
+                A -= A;
+                A -= c;
             }
             if (parsedHex[0] == "40")
             {
@@ -548,13 +561,15 @@ namespace Gameboyemu
             }
             if (parsedHex[0] == "A0")
             {
-                A = B & A;
+                //A = B & A;
             }
         }
-        public void ASMtoCs(string ASM) {
+        public void ASMtoCs(string ASM)
+        {
             string[] parsedASM = ASM.Split(' ');
             //INC
-            if (parsedASM[0] == "INCA") {
+            if (parsedASM[0] == "INCA")
+            {
                 INCA();
             }
 
@@ -657,14 +672,14 @@ namespace Gameboyemu
             //ADD
             if (parsedASM[0] == "ADD")
             {
-                    if (String.IsNullOrEmpty(parsedASM[2]))
-                    {
-                        ADD(Convert.ToInt32(parsedASM[1], 10));
-                    }
-                    ADD(parsedASM[1].Split(',')[1], parsedASM[2].Split(',')[2]);
-                    ADD(parsedASM[1].Split(',')[1], (int)this.GetType().GetField(parsedASM[2].Split(',')[2]).GetValue(this));
-                    ADD((int)this.GetType().GetField(parsedASM[1].Split(',')[0]).GetValue(this), parsedASM[2]);
-                    ADD((int)this.GetType().GetField(parsedASM[1].Split(',')[0]).GetValue(this), (int)this.GetType().GetField(parsedASM[2]).GetValue(this));
+                if (String.IsNullOrEmpty(parsedASM[2]))
+                {
+                    ADD(Convert.ToInt32(parsedASM[1], 10));
+                }
+                ADD(parsedASM[1].Split(',')[1], parsedASM[2].Split(',')[2]);
+                ADD(parsedASM[1].Split(',')[1], (int)this.GetType().GetField(parsedASM[2].Split(',')[2]).GetValue(this));
+                ADD((int)this.GetType().GetField(parsedASM[1].Split(',')[0]).GetValue(this), parsedASM[2]);
+                ADD((int)this.GetType().GetField(parsedASM[1].Split(',')[0]).GetValue(this), (int)this.GetType().GetField(parsedASM[2]).GetValue(this));
             }
             //SUB
             if (parsedASM[0] == "SUB")
@@ -741,15 +756,17 @@ namespace Gameboyemu
         }
         #endregion
         #region AND
-        
-        
+
+
         public void AND(string gan, string ganj)
         {
-            if (gan.Length == 1) {
-                if (gan == "A") {
+            if (gan.Length == 1)
+            {
+                if (gan == "A")
+                {
 
                 }
-            } 
+            }
             cpuRead = Convert.ToInt32(ganj, 16);
             cpuWrite = Convert.ToInt32(gan, 16);
             cpuWrite = cpuWrite & cpuRead;
@@ -784,7 +801,8 @@ namespace Gameboyemu
         {
             if (hjadnk.Length == 1)
             {
-                if (hjadnk == "A") {
+                if (hjadnk == "A")
+                {
                     A++;
                 }
 
@@ -815,7 +833,8 @@ namespace Gameboyemu
         }
         #endregion
         #region ADD
-        public void ADD(int asdaf, int rasraf) {
+        public void ADD(int asdaf, int rasraf)
+        {
             asdaf += rasraf;
         }
 
@@ -833,12 +852,12 @@ namespace Gameboyemu
         public void ADD(string rasdaf, int asdaf)
         {
             cpuRead = Convert.ToInt32(rasdaf, 16);
-            cpuBus[cpuRead] += asdaf;
+            //cpuBus[cpuRead] += asdaf;
         }
 
         public void ADD(int asdaf)
         {
-            A += asdaf;
+            //A += asdaf;
         }
 
         #endregion
@@ -862,12 +881,12 @@ namespace Gameboyemu
         public void SUB(string rasdaf, int asdaf)
         {
             cpuRead = Convert.ToInt32(rasdaf, 16);
-            cpuBus[cpuRead] -= asdaf;
+            //cpuBus[cpuRead] -= asdaf;
         }
 
         public void SUB(int asdaf)
         {
-            A -= asdaf;
+            //A -= asdaf;
         }
 
         #endregion
@@ -897,7 +916,7 @@ namespace Gameboyemu
 
         public void LDA(int hkdbhjfauuoijlnbughoal)
         {
-            A = hkdbhjfauuoijlnbughoal;
+            //A = hkdbhjfauuoijlnbughoal;
         }
 
         #endregion
@@ -908,9 +927,9 @@ namespace Gameboyemu
         }
         public void LD(string danj, int hkdbhjfauuoijlnbughoal)
         {
-            
+
             cpuRead = Convert.ToInt32(danj, 16);
-            cpuBus[cpuRead] = hkdbhjfauuoijlnbughoal;
+            //cpuBus[cpuRead] = hkdbhjfauuoijlnbughoal;
         }
 
         public void LD(string danj, string hkdbhjfauuoijlnbughoal)
@@ -944,9 +963,10 @@ namespace Gameboyemu
                     SP = cpuBus[Convert.ToInt32(hkdbhjfauuoijlnbughoal, 16)];
                 }
             }
-            else if(hkdbhjfauuoijlnbughoal.Length == 4 & danj.Length == 4) {
+            else if (hkdbhjfauuoijlnbughoal.Length == 4 & danj.Length == 4)
+            {
                 cpuRead = Convert.ToInt32(hkdbhjfauuoijlnbughoal, 16);
-                cpuBus[Convert.ToInt32(danj, 16)] = cpuRead;
+                //cpuBus[Convert.ToInt32(danj, 16)] = cpuRead;
             }
         }
 
@@ -955,71 +975,70 @@ namespace Gameboyemu
         {
             if (A > 256)
             {
-                A -= 256;
+                A = 0;
                 c += 1;
             }
 
             if (B > 256)
             {
-                B -= 256;
+                B = 0;
                 c += 1;
             }
 
             if (C > 256)
             {
-                C -= 256;
+                C = 0;
                 c += 1;
             }
             if (D > 256)
             {
-                D -= 256;
+                D = 0;
                 c += 1;
             }
             if (E > 256)
             {
-                E -= 256;
+                E = 0;
                 c += 1;
             }
 
             if (F > 256)
             {
-                F -= 256;
+                F = 0;
                 c += 1;
             }
 
             if (H > 256)
             {
-                H -= 256;
+                H = 0;
                 c += 1;
             }
 
             if (L > 256)
             {
-                L -= 256;
+                L = 0;
                 c += 1;
             }
 
             if (PC > 65535)
             {
-                PC -= 65535;
+                PC = 0;
                 c += 1;
             }
 
             if (SP > 65535)
             {
-                SP -= 65535;
+                SP = 0;
                 c += 1;
             }
 
-            if (cpuRead > 65535) {
-                cpuRead -= 65535;
-                c += 1;
+            if (cpuRead > 65535)
+            {
+                cpuRead = 0;
             }
 
             if (cpuWrite > 65535)
             {
-                cpuWrite -= 65535;
-                c += 1;
+                cpuWrite = 0;
             }
             if (c > 1)
             {
